@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>הפטרת שבת זכור</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="header-container">
+  <h1 class="main-title">חלק מהפטרת שבת זכור – שמואל א' פרק ט"ו פסוקים ב' – ח'</h1>
+
+  <div class="header-buttons">
+    <button onclick="playAudio('הפטרת זכור את אשר עשה לך עמלק שבת זכור.mp3')">▶ נגן את כל ההפטרה</button>
+    <button onclick="playAudio('הפטרת זכור את אשר עשה לך עמלק שבת זכור.mp3', null, 0.75)">🐢 איטי ×0.75</button>
+    <button onclick="playAudio('הפטרת זכור את אשר עשה לך עמלק שבת זכור.mp3', null, 0.5)">🐢🐢 איטי ×0.5</button>
+    <button class="stop" onclick="stopAudio()">⏹ עצור</button>
+  </div>
+</div>
+
+<div id="status" class="status">מוכן.</div>
+
+<!-- פסוק ב (2) -->
+<div class="pasuk" id="pasuk-2">
+  <div class="buttons">
+    <button onclick="playAudio('פסוק ב הפטרת שבת זכור.mp3','pasuk-2')">▶ הפעלה</button>
+    <button onclick="playLoop('פסוק ב הפטרת שבת זכור.mp3',10,'pasuk-2')">🔁 לופ x10</button>
+    <button onclick="playAudio('פסוק ב הפטרת שבת זכור.mp3','pasuk-2',0.75)">🐢 ×0.75</button>
+    <button onclick="playAudio('פסוק ב הפטרת שבת זכור.mp3','pasuk-2',0.5)">🐢🐢 ×0.5</button>
+    <button class="stop" onclick="stopAudio()">⏹ עצור</button>
+  </div>
+  <p class="pasuk-text">
+    <strong class="pasuk-label">פסוק ב)</strong>
+    כֹּה אָמַר ה' צבאות פָּקַדְתִּי אֵת אֲשֶׁר עָשָׂה עֲמָלֵק לְיִשְׂרָאֵל אֲשֶׁר שָׂם לוֹ בַּדֶּרֶךְ בַּעֲלֹתוֹ מִמִּצְרָיִם<span class="end-verse">׃</span>
+  </p>
+</div>
+
+<!-- פסוק ג (3) -->
+<div class="pasuk" id="pasuk-3">
+  <div class="buttons">
+    <button onclick="playAudio('פסוק ג הפטרת שבת זכור.mp3','pasuk-3')">▶ הפעלה</button>
+    <button onclick="playLoop('פסוק ג הפטרת שבת זכור.mp3',10,'pasuk-3')">🔁 לופ x10</button>
+    <button onclick="playAudio('פסוק ג הפטרת שבת זכור.mp3','pasuk-3',0.75)">🐢 ×0.75</button>
+    <button onclick="playAudio('פסוק ג הפטרת שבת זכור.mp3','pasuk-3',0.5)">🐢🐢 ×0.5</button>
+    <button class="stop" onclick="stopAudio()">⏹ עצור</button>
+  </div>
+  <p class="pasuk-text">
+    <strong class="pasuk-label">פסוק ג)</strong>
+    עַתָּה לֵךְ וְהִכִּיתָה אֶת עֲמָלֵק וְהַחֲרַמְתֶּם אֶת כָּל אֲשֶׁר לוֹ וְלֹא תַחְמֹל עָלָיו וְהֵמַתָּה מֵאִישׁ עַד אִשָּׁה מֵעֹלֵל וְעַד יוֹנֵק מִשּׁוֹר וְעַד שֶׂה מִגָּמָל וְעַד חֲמוֹר<span class="end-verse">׃</span>
+  </p>
+</div>
+
+<!-- פסוק ד (4) -->
+<div class="pasuk" id="pasuk-4">
+  <div class="buttons">
+    <button onclick="playAudio('פסוק ד הפטרת שבת זכור.mp3','pasuk-4')">▶ הפעלה</button>
+    <button onclick="playLoop('פסוק ד הפטרת שבת זכור.mp3',10,'pasuk-4')">🔁 לופ x10</button>
+    <button onclick="playAudio('פסוק ד הפטרת שבת זכור.mp3','pasuk-4',0.75)">🐢 ×0.75</button>
+    <button onclick="playAudio('פסוק ד הפטרת שבת זכור.mp3','pasuk-4',0.5)">🐢🐢 ×0.5</button>
+    <button class="stop" onclick="stopAudio()">⏹ עצור</button>
+  </div>
+  <p class="pasuk-text">
+    <strong class="pasuk-label">פסוק ד)</strong>
+    וַיְשַׁמַּע שָׁאוּל אֶת הָעָם וַיִּפְקְדֵם בַּטְּלָאִים מָאתַיִם אֶלֶף רַגְלִי וַעֲשֶׂרֶת אֲלָפִים אֶת אִישׁ יְהוּדָה<span class="end-verse">׃</span>
+  </p>
+</div>
+
+<!-- פסוק ה (5) -->
+<div class="pasuk" id="pasuk-5">
+  <div class="buttons">
+    <button onclick="playAudio('פסוק ה הפטרת שבת זכור.mp3','pasuk-5')">▶ הפעלה</button>
+    <button onclick="playLoop('פסוק ה הפטרת שבת זכור.mp3',10,'pasuk-5')">🔁 לופ x10</button>
+    <button onclick="playAudio('פסוק ה הפטרת שבת זכור.mp3','pasuk-5',0.75)">🐢 ×0.75</button>
+    <button onclick="playAudio('פסוק ה הפטרת שבת זכור.mp3','pasuk-5',0.5)">🐢🐢 ×0.5</button>
+    <button class="stop" onclick="stopAudio()">⏹ עצור</button>
+  </div>
+  <p class="pasuk-text">
+    <strong class="pasuk-label">פסוק ה)</strong>
+    וַיָּבֹא שָׁאוּל עַד עִיר עֲמָלֵק וַיָּרֶב בַּנָּחַל<span class="end-verse">׃</span>
+  </p>
+</div>
+
+<!-- פסוק ו (6) -->
+<div class="pasuk" id="pasuk-6">
+  <div class="buttons">
+    <button onclick="playAudio('פסוק ו הפטרת שבת זכור.mp3','pasuk-6')">▶ הפעלה</button>
+    <button onclick="playLoop('פסוק ו הפטרת שבת זכור.mp3',10,'pasuk-6')">🔁 לופ x10</button>
+    <button onclick="playAudio('פסוק ו הפטרת שבת זכור.mp3','pasuk-6',0.75)">🐢 ×0.75</button>
+    <button onclick="playAudio('פסוק ו הפטרת שבת זכור.mp3','pasuk-6',0.5)">🐢🐢 ×0.5</button>
+    <button class="stop" onclick="stopAudio()">⏹ עצור</button>
+  </div>
+  <p class="pasuk-text">
+    <strong class="pasuk-label">פסוק ו)</strong>
+    וַיֹּאמֶר שָׁאוּל אֶל הַקֵּינִי לְכוּ סֻּרוּ רְדוּ מִתּוֹךְ עֲמָלֵקִי פֶּן אֹסִפְךָ עִמּוֹ וְאַתָּה עָשִׂיתָה חֶסֶד עִם כָּל בְּנֵי יִשְׂרָאֵל בַּעֲלוֹתָם מִמִּצְרָיִם וַיָּסַר קֵינִי מִתּוֹךְ עֲמָלֵק<span class="end-verse">׃</span>
+  </p>
+</div>
+
+<!-- פסוק ז (7) -->
+<div class="pasuk" id="pasuk-7">
+  <div class="buttons">
+    <button onclick="playAudio('פסוק ז הפטרת שבת זכור.mp3','pasuk-7')">▶ הפעלה</button>
+    <button onclick="playLoop('פסוק ז הפטרת שבת זכור.mp3',10,'pasuk-7')">🔁 לופ x10</button>
+    <button onclick="playAudio('פסוק ז הפטרת שבת זכור.mp3','pasuk-7',0.75)">🐢 ×0.75</button>
+    <button onclick="playAudio('פסוק ז הפטרת שבת זכור.mp3','pasuk-7',0.5)">🐢🐢 ×0.5</button>
+    <button class="stop" onclick="stopAudio()">⏹ עצור</button>
+  </div>
+  <p class="pasuk-text">
+    <strong class="pasuk-label">פסוק ז)</strong>
+    וַיַּךְ שָׁאוּל אֶת עֲמָלֵק מֵחֲוִילָה בּוֹאֲךָ שׁוּר אֲשֶׁר עַל פְּנֵי מִצְרָיִם<span class="end-verse">׃</span>
+  </p>
+</div>
+
+<!-- פסוק ח (8) -->
+<div class="pasuk" id="pasuk-8">
+  <div class="buttons">
+    <button onclick="playAudio('פסוק ח הפטרת שבת זכור.mp3','pasuk-8')">▶ הפעלה</button>
+    <button onclick="playLoop('פסוק ח הפטרת שבת זכור.mp3',10,'pasuk-8')">🔁 לופ x10</button>
+    <button onclick="playAudio('פסוק ח הפטרת שבת זכור.mp3','pasuk-8',0.75)">🐢 ×0.75</button>
+    <button onclick="playAudio('פסוק ח הפטרת שבת זכור.mp3','pasuk-8',0.5)">🐢🐢 ×0.5</button>
+    <button class="stop" onclick="stopAudio()">⏹ עצור</button>
+  </div>
+  <p class="pasuk-text">
+    <strong class="pasuk-label">פסוק ח)</strong>
+    וַיִּתְפֹּשׂ אֶת אֲגַג מֶלֶךְ עֲמָלֵק חָי וְאֶת כָּל הָעָם הֶחֱרִים לְפִי חָרֶב<span class="end-verse">׃</span>
+  </p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

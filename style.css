@@ -1,0 +1,148 @@
+/* ===== גלילה בטוחה ===== */
+html, body {
+  height: auto;
+  overflow-y: auto;
+}
+
+/* ===== כללי ===== */
+body {
+  font-family: "David", "Frank Ruhl Libre", serif;
+  background: #f4f1e8;
+  padding: 26px;        /* פחות ריווח מסביב */
+  line-height: 2.2;
+  direction: rtl;
+}
+
+/* ===== אזור כותרת ===== */
+.header-container {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.main-title {
+  color: #2b3a55;
+  font-size: 34px;
+  margin: 0 0 10px 0;
+}
+
+.header-buttons button {
+  margin: 4px;
+}
+
+/* ===== סטטוס ===== */
+.status {
+  margin: 10px 0 18px;
+  padding: 8px 12px;
+  background: #fff7d6;
+  border: 1px solid #e6d28a;
+  border-radius: 10px;
+  color: #2b3a55;
+  font-size: 16px;
+  text-align: center;
+  min-height: 22px;
+}
+
+/* ===== קופסת פסוק (פריים קטן יותר) ===== */
+.pasuk {
+  background: white;
+  padding: 14px 16px;   /* קטן יותר */
+  margin: 12px 0;       /* קטן יותר */
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+  transition: 0.25s;
+}
+
+/* ===== highlight בזמן ניגון ===== */
+.pasuk.playing {
+  outline: 4px solid #f2c94c;
+  box-shadow: 0 0 0 6px rgba(242, 201, 76, 0.25);
+  background: #fffdf5;
+}
+
+/* ===== טקסט הפסוק ===== */
+.pasuk-text {
+  font-size: 34px;
+  color: #1f3b57;
+  font-weight: 500;
+  margin: 0;            /* חשוב: מוריד ריווח גדול מעל/מתחת לטקסט */
+}
+
+/* כותרת "פסוק ב)" בלבד — לא מגדילים */
+.pasuk-label {
+  font-size: 24px;
+  color: #2b3a55;
+  font-weight: 700;
+}
+
+/* ===== סוף פסוק / סימונים לימודיים ===== */
+.end-verse {
+  color: #b02323;       /* סוף פסוק באדום כהה */
+  font-weight: 800;
+}
+
+/* אתנחתא (תשתמש ידנית באמצע פסוק) */
+.etnahta {
+  color: #7b2cbf;       /* סגול */
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+/* ===== כפתורים ===== */
+.buttons {
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 8px 14px;
+  margin-left: 6px;
+  border-radius: 8px;
+  border: none;
+  background: #3a6ea5;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #274c77;
+}
+
+button.stop {
+  background: #8a2e2e;
+}
+
+button.stop:hover {
+  background: #6e2323;
+}
+
+/* ===== התאמה למסך נייד ===== */
+@media (max-width: 768px) {
+
+  body {
+    padding: 14px;
+  }
+
+  .pasuk-text {
+    font-size: 28px;   /* מעט קטן יותר למובייל */
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  button {
+    flex: 1 1 45%;
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .header-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+  }
+}
