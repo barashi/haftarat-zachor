@@ -1,148 +1,727 @@
-/* ===== גלילה בטוחה ===== */
-html, body {
-  height: auto;
-  overflow-y: auto;
+/* =========================
+   Haftara mini-site v2 (CSV)
+   style.css
+   ========================= */
+
+:root{
+  --bg:#f6f7fb;
+  --card:#ffffff;
+  --text:#14161a;
+  --muted:#5c667a;
+  --border:#e5e8f0;
+  --accent:#1f4b99;
+  --accent-2:#0f766e;
+  --danger:#b42318;
+  --shadow:0 6px 22px rgba(20,22,26,.08);
 }
 
-/* ===== כללי ===== */
-body {
-  font-family: "David", "Frank Ruhl Libre", serif;
-  background: #f4f1e8;
-  padding: 26px;        /* פחות ריווח מסביב */
-  line-height: 2.2;
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  padding:18px;
+  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+a{color:var(--accent); text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+.header-container{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px 16px 12px;
+  box-shadow:var(--shadow);
+  margin-bottom:12px;
+}
+
+.main-title{
+  margin:0 0 10px;
+  font-size:clamp(22px, 3.2vw, 40px);
+  line-height:1.25;
+  font-weight:800;
+}
+
+.header-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.status{
+  background:rgba(31,75,153,.08);
+  border:1px solid rgba(31,75,153,.18);
+  color:#0f244d;
+  border-radius:12px;
+  padding:10px 12px;
+  margin:12px 0;
+  font-size:clamp(14px, 2.2vw, 20px);
+}
+
+.note-box{
+  background:var(--card);
+  border:1px dashed rgba(92,102,122,.35);
+  border-radius:12px;
+  padding:10px 12px;
+  color:var(--muted);
+  margin:10px 0;
+}
+
+#psukimContainer{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.pasuk{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px;
+  box-shadow:var(--shadow);
+}
+
+.pasuk.no-audio{
+  opacity:.9;
+}
+
+.pasuk.playing{
+  background:#fff7d6;              /* צהוב בהיר נעים */
+  border:2px solid #ffe08a;         /* מסגרת צהובה בהירה */
+  box-shadow:0 10px 26px rgba(20,22,26,.10);
+}
+
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:10px;
+  justify-content:flex-end;
+}
+
+button{
+  border:1px solid rgba(31,75,153,.22);
+  background:rgba(31,75,153,.92);   /* כחול נעים */
+  color:#ffffff;
+  padding:12px 16px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:clamp(14px, 2.2vw, 20px);
+  font-weight:800;
+  line-height:1.1;
+  min-height:44px;                  /* mobile tap target */
+  transition:filter .15s ease, transform .05s ease, background-color .15s ease, box-shadow .15s ease;
+  box-shadow:0 4px 14px rgba(31,75,153,.18);
+}
+
+button:hover{
+  filter:brightness(1.06);
+  box-shadow:0 6px 18px rgba(31,75,153,.24);
+}
+
+button:active{transform:translateY(1px);}
+
+button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+
+button.stop{
+  border-color:rgba(180,35,24,.35);
+  background:rgba(180,35,24,.90);
+  color:#ffffff;
+  box-shadow:0 4px 14px rgba(180,35,24,.18);
+}
+button.stop:hover{filter:brightness(1.06); box-shadow:0 6px 18px rgba(180,35,24,.24);}
+
+.pasuk-text{
+  margin:0;
+  line-height:1.75;
+  font-size:clamp(22px, 3.1vw, 44px);
+  text-align: right;
+}
+
+.pasuk-label{
+  color:var(--accent);
+}
+
+/* -------------------------
+   Example styles that can be referenced from word_styles.csv
+   ------------------------- */
+
+/* -------------------------
+   Trope / טעמים – default styles (can be referenced from word_styles.csv)
+   ------------------------- */
+.taam-silluq{ font-weight:900; text-decoration:underline; }
+.taam-etnachta{ font-weight:900; text-decoration:underline; }
+.taam-zakef{ font-weight:850; text-decoration:underline; }
+.taam-telisha{ font-weight:850; text-decoration:underline; }
+.taam-mercha{ font-weight:850; text-decoration:underline; }
+.taam-munach{ font-weight:850; text-decoration:underline; }
+.taam-pazer{ font-weight:850; text-decoration:underline; }
+.taam-geresh{ font-weight:850; text-decoration:underline; }
+.taam-gershayim{ font-weight:850; text-decoration:underline; }
+.taam-rivia{ font-weight:850; text-decoration:underline; }
+
+/* === Imported from example_text_styles.css === */
+/* ============================================================
+   ACCENT1 — LIGHT BACKGROUND (#DDEBF7)
+   Text: dark colors
+   ============================================================ */
+
+.accent1_light_fgBlack_normal { background:#DDEBF7; color:#000000;  }
+.accent1_light_fgBlack_bold { background:#DDEBF7; color:#000000; font-weight:bold; }
+.accent1_light_fgBlack_italic { background:#DDEBF7; color:#000000; font-style:italic; }
+.accent1_light_fgBlack_underline { background:#DDEBF7; color:#000000; text-decoration:underline; }
+.accent1_light_fgGray_normal { background:#DDEBF7; color:#3A3A3A;  }
+.accent1_light_fgGray_bold { background:#DDEBF7; color:#3A3A3A; font-weight:bold; }
+.accent1_light_fgGray_italic { background:#DDEBF7; color:#3A3A3A; font-style:italic; }
+.accent1_light_fgGray_underline { background:#DDEBF7; color:#3A3A3A; text-decoration:underline; }
+.accent1_light_fgBrown_normal { background:#DDEBF7; color:#5A381E;  }
+.accent1_light_fgBrown_bold { background:#DDEBF7; color:#5A381E; font-weight:bold; }
+.accent1_light_fgBrown_italic { background:#DDEBF7; color:#5A381E; font-style:italic; }
+.accent1_light_fgBrown_underline { background:#DDEBF7; color:#5A381E; text-decoration:underline; }
+.accent1_light_fgDarkGreen_normal { background:#DDEBF7; color:#0B3B0B;  }
+.accent1_light_fgDarkGreen_bold { background:#DDEBF7; color:#0B3B0B; font-weight:bold; }
+.accent1_light_fgDarkGreen_italic { background:#DDEBF7; color:#0B3B0B; font-style:italic; }
+.accent1_light_fgDarkGreen_underline { background:#DDEBF7; color:#0B3B0B; text-decoration:underline; }
+.accent1_light_fgPurple_normal { background:#DDEBF7; color:#2E1A47;  }
+.accent1_light_fgPurple_bold { background:#DDEBF7; color:#2E1A47; font-weight:bold; }
+.accent1_light_fgPurple_italic { background:#DDEBF7; color:#2E1A47; font-style:italic; }
+.accent1_light_fgPurple_underline { background:#DDEBF7; color:#2E1A47; text-decoration:underline; }
+.accent1_light_fgDarkRed_normal { background:#DDEBF7; color:#7A0000;  }
+.accent1_light_fgDarkRed_bold { background:#DDEBF7; color:#7A0000; font-weight:bold; }
+.accent1_light_fgDarkRed_italic { background:#DDEBF7; color:#7A0000; font-style:italic; }
+.accent1_light_fgDarkRed_underline { background:#DDEBF7; color:#7A0000; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT1 — MEDIUM BACKGROUND (#5B9BD5)
+   Text: light colors
+   ============================================================ */
+
+.accent1_medium_fgWhite_normal { background:#5B9BD5; color:#FFFFFF;  }
+.accent1_medium_fgWhite_bold { background:#5B9BD5; color:#FFFFFF; font-weight:bold; }
+.accent1_medium_fgWhite_italic { background:#5B9BD5; color:#FFFFFF; font-style:italic; }
+.accent1_medium_fgWhite_underline { background:#5B9BD5; color:#FFFFFF; text-decoration:underline; }
+.accent1_medium_fgYellow_normal { background:#5B9BD5; color:#FFFFAA;  }
+.accent1_medium_fgYellow_bold { background:#5B9BD5; color:#FFFFAA; font-weight:bold; }
+.accent1_medium_fgYellow_italic { background:#5B9BD5; color:#FFFFAA; font-style:italic; }
+.accent1_medium_fgYellow_underline { background:#5B9BD5; color:#FFFFAA; text-decoration:underline; }
+.accent1_medium_fgLightBlue_normal { background:#5B9BD5; color:#D6E6FF;  }
+.accent1_medium_fgLightBlue_bold { background:#5B9BD5; color:#D6E6FF; font-weight:bold; }
+.accent1_medium_fgLightBlue_italic { background:#5B9BD5; color:#D6E6FF; font-style:italic; }
+.accent1_medium_fgLightBlue_underline { background:#5B9BD5; color:#D6E6FF; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT1 — DARK BACKGROUND (#2F5597)
+   Text: light colors
+   ============================================================ */
+
+.accent1_dark_fgWhite_normal { background:#2F5597; color:#FFFFFF;  }
+.accent1_dark_fgWhite_bold { background:#2F5597; color:#FFFFFF; font-weight:bold; }
+.accent1_dark_fgWhite_italic { background:#2F5597; color:#FFFFFF; font-style:italic; }
+.accent1_dark_fgWhite_underline { background:#2F5597; color:#FFFFFF; text-decoration:underline; }
+.accent1_dark_fgYellow_normal { background:#2F5597; color:#FFFFAA;  }
+.accent1_dark_fgYellow_bold { background:#2F5597; color:#FFFFAA; font-weight:bold; }
+.accent1_dark_fgYellow_italic { background:#2F5597; color:#FFFFAA; font-style:italic; }
+.accent1_dark_fgYellow_underline { background:#2F5597; color:#FFFFAA; text-decoration:underline; }
+.accent1_dark_fgLightBlue_normal { background:#2F5597; color:#D6E6FF;  }
+.accent1_dark_fgLightBlue_bold { background:#2F5597; color:#D6E6FF; font-weight:bold; }
+.accent1_dark_fgLightBlue_italic { background:#2F5597; color:#D6E6FF; font-style:italic; }
+.accent1_dark_fgLightBlue_underline { background:#2F5597; color:#D6E6FF; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT2 — LIGHT BACKGROUND (#FCE4D6)
+   Text: dark colors
+   ============================================================ */
+
+.accent2_light_fgBlack_normal { background:#FCE4D6; color:#000000;  }
+.accent2_light_fgBlack_bold { background:#FCE4D6; color:#000000; font-weight:bold; }
+.accent2_light_fgBlack_italic { background:#FCE4D6; color:#000000; font-style:italic; }
+.accent2_light_fgBlack_underline { background:#FCE4D6; color:#000000; text-decoration:underline; }
+.accent2_light_fgGray_normal { background:#FCE4D6; color:#3A3A3A;  }
+.accent2_light_fgGray_bold { background:#FCE4D6; color:#3A3A3A; font-weight:bold; }
+.accent2_light_fgGray_italic { background:#FCE4D6; color:#3A3A3A; font-style:italic; }
+.accent2_light_fgGray_underline { background:#FCE4D6; color:#3A3A3A; text-decoration:underline; }
+.accent2_light_fgBrown_normal { background:#FCE4D6; color:#5A381E;  }
+.accent2_light_fgBrown_bold { background:#FCE4D6; color:#5A381E; font-weight:bold; }
+.accent2_light_fgBrown_italic { background:#FCE4D6; color:#5A381E; font-style:italic; }
+.accent2_light_fgBrown_underline { background:#FCE4D6; color:#5A381E; text-decoration:underline; }
+.accent2_light_fgDarkGreen_normal { background:#FCE4D6; color:#0B3B0B;  }
+.accent2_light_fgDarkGreen_bold { background:#FCE4D6; color:#0B3B0B; font-weight:bold; }
+.accent2_light_fgDarkGreen_italic { background:#FCE4D6; color:#0B3B0B; font-style:italic; }
+.accent2_light_fgDarkGreen_underline { background:#FCE4D6; color:#0B3B0B; text-decoration:underline; }
+.accent2_light_fgPurple_normal { background:#FCE4D6; color:#2E1A47;  }
+.accent2_light_fgPurple_bold { background:#FCE4D6; color:#2E1A47; font-weight:bold; }
+.accent2_light_fgPurple_italic { background:#FCE4D6; color:#2E1A47; font-style:italic; }
+.accent2_light_fgPurple_underline { background:#FCE4D6; color:#2E1A47; text-decoration:underline; }
+.accent2_light_fgDarkRed_normal { background:#FCE4D6; color:#7A0000;  }
+.accent2_light_fgDarkRed_bold { background:#FCE4D6; color:#7A0000; font-weight:bold; }
+.accent2_light_fgDarkRed_italic { background:#FCE4D6; color:#7A0000; font-style:italic; }
+.accent2_light_fgDarkRed_underline { background:#FCE4D6; color:#7A0000; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT2 — MEDIUM BACKGROUND (#ED7D31)
+   Text: light colors
+   ============================================================ */
+
+.accent2_medium_fgWhite_normal { background:#ED7D31; color:#FFFFFF;  }
+.accent2_medium_fgWhite_bold { background:#ED7D31; color:#FFFFFF; font-weight:bold; }
+.accent2_medium_fgWhite_italic { background:#ED7D31; color:#FFFFFF; font-style:italic; }
+.accent2_medium_fgWhite_underline { background:#ED7D31; color:#FFFFFF; text-decoration:underline; }
+.accent2_medium_fgYellow_normal { background:#ED7D31; color:#FFFFAA;  }
+.accent2_medium_fgYellow_bold { background:#ED7D31; color:#FFFFAA; font-weight:bold; }
+.accent2_medium_fgYellow_italic { background:#ED7D31; color:#FFFFAA; font-style:italic; }
+.accent2_medium_fgYellow_underline { background:#ED7D31; color:#FFFFAA; text-decoration:underline; }
+.accent2_medium_fgLightBlue_normal { background:#ED7D31; color:#D6E6FF;  }
+.accent2_medium_fgLightBlue_bold { background:#ED7D31; color:#D6E6FF; font-weight:bold; }
+.accent2_medium_fgLightBlue_italic { background:#ED7D31; color:#D6E6FF; font-style:italic; }
+.accent2_medium_fgLightBlue_underline { background:#ED7D31; color:#D6E6FF; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT2 — DARK BACKGROUND (#C65911)
+   Text: light colors
+   ============================================================ */
+
+.accent2_dark_fgWhite_normal { background:#C65911; color:#FFFFFF;  }
+.accent2_dark_fgWhite_bold { background:#C65911; color:#FFFFFF; font-weight:bold; }
+.accent2_dark_fgWhite_italic { background:#C65911; color:#FFFFFF; font-style:italic; }
+.accent2_dark_fgWhite_underline { background:#C65911; color:#FFFFFF; text-decoration:underline; }
+.accent2_dark_fgYellow_normal { background:#C65911; color:#FFFFAA;  }
+.accent2_dark_fgYellow_bold { background:#C65911; color:#FFFFAA; font-weight:bold; }
+.accent2_dark_fgYellow_italic { background:#C65911; color:#FFFFAA; font-style:italic; }
+.accent2_dark_fgYellow_underline { background:#C65911; color:#FFFFAA; text-decoration:underline; }
+.accent2_dark_fgLightBlue_normal { background:#C65911; color:#D6E6FF;  }
+.accent2_dark_fgLightBlue_bold { background:#C65911; color:#D6E6FF; font-weight:bold; }
+.accent2_dark_fgLightBlue_italic { background:#C65911; color:#D6E6FF; font-style:italic; }
+.accent2_dark_fgLightBlue_underline { background:#C65911; color:#D6E6FF; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT3 — LIGHT BACKGROUND (#EDEDED)
+   Text: dark colors
+   ============================================================ */
+
+.accent3_light_fgBlack_normal { background:#EDEDED; color:#000000;  }
+.accent3_light_fgBlack_bold { background:#EDEDED; color:#000000; font-weight:bold; }
+.accent3_light_fgBlack_italic { background:#EDEDED; color:#000000; font-style:italic; }
+.accent3_light_fgBlack_underline { background:#EDEDED; color:#000000; text-decoration:underline; }
+.accent3_light_fgGray_normal { background:#EDEDED; color:#3A3A3A;  }
+.accent3_light_fgGray_bold { background:#EDEDED; color:#3A3A3A; font-weight:bold; }
+.accent3_light_fgGray_italic { background:#EDEDED; color:#3A3A3A; font-style:italic; }
+.accent3_light_fgGray_underline { background:#EDEDED; color:#3A3A3A; text-decoration:underline; }
+.accent3_light_fgBrown_normal { background:#EDEDED; color:#5A381E;  }
+.accent3_light_fgBrown_bold { background:#EDEDED; color:#5A381E; font-weight:bold; }
+.accent3_light_fgBrown_italic { background:#EDEDED; color:#5A381E; font-style:italic; }
+.accent3_light_fgBrown_underline { background:#EDEDED; color:#5A381E; text-decoration:underline; }
+.accent3_light_fgDarkGreen_normal { background:#EDEDED; color:#0B3B0B;  }
+.accent3_light_fgDarkGreen_bold { background:#EDEDED; color:#0B3B0B; font-weight:bold; }
+.accent3_light_fgDarkGreen_italic { background:#EDEDED; color:#0B3B0B; font-style:italic; }
+.accent3_light_fgDarkGreen_underline { background:#EDEDED; color:#0B3B0B; text-decoration:underline; }
+.accent3_light_fgPurple_normal { background:#EDEDED; color:#2E1A47;  }
+.accent3_light_fgPurple_bold { background:#EDEDED; color:#2E1A47; font-weight:bold; }
+.accent3_light_fgPurple_italic { background:#EDEDED; color:#2E1A47; font-style:italic; }
+.accent3_light_fgPurple_underline { background:#EDEDED; color:#2E1A47; text-decoration:underline; }
+.accent3_light_fgDarkRed_normal { background:#EDEDED; color:#7A0000;  }
+.accent3_light_fgDarkRed_bold { background:#EDEDED; color:#7A0000; font-weight:bold; }
+.accent3_light_fgDarkRed_italic { background:#EDEDED; color:#7A0000; font-style:italic; }
+.accent3_light_fgDarkRed_underline { background:#EDEDED; color:#7A0000; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT3 — MEDIUM BACKGROUND (#A5A5A5)
+   Text: light colors
+   ============================================================ */
+
+.accent3_medium_fgWhite_normal { background:#A5A5A5; color:#FFFFFF;  }
+.accent3_medium_fgWhite_bold { background:#A5A5A5; color:#FFFFFF; font-weight:bold; }
+.accent3_medium_fgWhite_italic { background:#A5A5A5; color:#FFFFFF; font-style:italic; }
+.accent3_medium_fgWhite_underline { background:#A5A5A5; color:#FFFFFF; text-decoration:underline; }
+.accent3_medium_fgYellow_normal { background:#A5A5A5; color:#FFFFAA;  }
+.accent3_medium_fgYellow_bold { background:#A5A5A5; color:#FFFFAA; font-weight:bold; }
+.accent3_medium_fgYellow_italic { background:#A5A5A5; color:#FFFFAA; font-style:italic; }
+.accent3_medium_fgYellow_underline { background:#A5A5A5; color:#FFFFAA; text-decoration:underline; }
+.accent3_medium_fgLightBlue_normal { background:#A5A5A5; color:#D6E6FF;  }
+.accent3_medium_fgLightBlue_bold { background:#A5A5A5; color:#D6E6FF; font-weight:bold; }
+.accent3_medium_fgLightBlue_italic { background:#A5A5A5; color:#D6E6FF; font-style:italic; }
+.accent3_medium_fgLightBlue_underline { background:#A5A5A5; color:#D6E6FF; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT3 — DARK BACKGROUND (#7F7F7F)
+   Text: light colors
+   ============================================================ */
+
+.accent3_dark_fgWhite_normal { background:#7F7F7F; color:#FFFFFF;  }
+.accent3_dark_fgWhite_bold { background:#7F7F7F; color:#FFFFFF; font-weight:bold; }
+.accent3_dark_fgWhite_italic { background:#7F7F7F; color:#FFFFFF; font-style:italic; }
+.accent3_dark_fgWhite_underline { background:#7F7F7F; color:#FFFFFF; text-decoration:underline; }
+.accent3_dark_fgYellow_normal { background:#7F7F7F; color:#FFFFAA;  }
+.accent3_dark_fgYellow_bold { background:#7F7F7F; color:#FFFFAA; font-weight:bold; }
+.accent3_dark_fgYellow_italic { background:#7F7F7F; color:#FFFFAA; font-style:italic; }
+.accent3_dark_fgYellow_underline { background:#7F7F7F; color:#FFFFAA; text-decoration:underline; }
+.accent3_dark_fgLightBlue_normal { background:#7F7F7F; color:#D6E6FF;  }
+.accent3_dark_fgLightBlue_bold { background:#7F7F7F; color:#D6E6FF; font-weight:bold; }
+.accent3_dark_fgLightBlue_italic { background:#7F7F7F; color:#D6E6FF; font-style:italic; }
+.accent3_dark_fgLightBlue_underline { background:#7F7F7F; color:#D6E6FF; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT4 — LIGHT BACKGROUND (#FFF2CC)
+   Text: dark colors
+   ============================================================ */
+
+.accent4_light_fgBlack_normal { background:#FFF2CC; color:#000000;  }
+.accent4_light_fgBlack_bold { background:#FFF2CC; color:#000000; font-weight:bold; }
+.accent4_light_fgBlack_italic { background:#FFF2CC; color:#000000; font-style:italic; }
+.accent4_light_fgBlack_underline { background:#FFF2CC; color:#000000; text-decoration:underline; }
+.accent4_light_fgGray_normal { background:#FFF2CC; color:#3A3A3A;  }
+.accent4_light_fgGray_bold { background:#FFF2CC; color:#3A3A3A; font-weight:bold; }
+.accent4_light_fgGray_italic { background:#FFF2CC; color:#3A3A3A; font-style:italic; }
+.accent4_light_fgGray_underline { background:#FFF2CC; color:#3A3A3A; text-decoration:underline; }
+.accent4_light_fgBrown_normal { background:#FFF2CC; color:#5A381E;  }
+.accent4_light_fgBrown_bold { background:#FFF2CC; color:#5A381E; font-weight:bold; }
+.accent4_light_fgBrown_italic { background:#FFF2CC; color:#5A381E; font-style:italic; }
+.accent4_light_fgBrown_underline { background:#FFF2CC; color:#5A381E; text-decoration:underline; }
+.accent4_light_fgDarkGreen_normal { background:#FFF2CC; color:#0B3B0B;  }
+.accent4_light_fgDarkGreen_bold { background:#FFF2CC; color:#0B3B0B; font-weight:bold; }
+.accent4_light_fgDarkGreen_italic { background:#FFF2CC; color:#0B3B0B; font-style:italic; }
+.accent4_light_fgDarkGreen_underline { background:#FFF2CC; color:#0B3B0B; text-decoration:underline; }
+.accent4_light_fgPurple_normal { background:#FFF2CC; color:#2E1A47;  }
+.accent4_light_fgPurple_bold { background:#FFF2CC; color:#2E1A47; font-weight:bold; }
+.accent4_light_fgPurple_italic { background:#FFF2CC; color:#2E1A47; font-style:italic; }
+.accent4_light_fgPurple_underline { background:#FFF2CC; color:#2E1A47; text-decoration:underline; }
+.accent4_light_fgDarkRed_normal { background:#FFF2CC; color:#7A0000;  }
+.accent4_light_fgDarkRed_bold { background:#FFF2CC; color:#7A0000; font-weight:bold; }
+.accent4_light_fgDarkRed_italic { background:#FFF2CC; color:#7A0000; font-style:italic; }
+.accent4_light_fgDarkRed_underline { background:#FFF2CC; color:#7A0000; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT4 — MEDIUM BACKGROUND (#FFC000)
+   Text: light colors
+   ============================================================ */
+
+.accent4_medium_fgWhite_normal { background:#FFC000; color:#FFFFFF;  }
+.accent4_medium_fgWhite_bold { background:#FFC000; color:#FFFFFF; font-weight:bold; }
+.accent4_medium_fgWhite_italic { background:#FFC000; color:#FFFFFF; font-style:italic; }
+.accent4_medium_fgWhite_underline { background:#FFC000; color:#FFFFFF; text-decoration:underline; }
+.accent4_medium_fgYellow_normal { background:#FFC000; color:#FFFFAA;  }
+.accent4_medium_fgYellow_bold { background:#FFC000; color:#FFFFAA; font-weight:bold; }
+.accent4_medium_fgYellow_italic { background:#FFC000; color:#FFFFAA; font-style:italic; }
+.accent4_medium_fgYellow_underline { background:#FFC000; color:#FFFFAA; text-decoration:underline; }
+.accent4_medium_fgLightBlue_normal { background:#FFC000; color:#D6E6FF;  }
+.accent4_medium_fgLightBlue_bold { background:#FFC000; color:#D6E6FF; font-weight:bold; }
+.accent4_medium_fgLightBlue_italic { background:#FFC000; color:#D6E6FF; font-style:italic; }
+.accent4_medium_fgLightBlue_underline { background:#FFC000; color:#D6E6FF; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT4 — DARK BACKGROUND (#BF8F00)
+   Text: light colors
+   ============================================================ */
+
+.accent4_dark_fgWhite_normal { background:#BF8F00; color:#FFFFFF;  }
+.accent4_dark_fgWhite_bold { background:#BF8F00; color:#FFFFFF; font-weight:bold; }
+.accent4_dark_fgWhite_italic { background:#BF8F00; color:#FFFFFF; font-style:italic; }
+.accent4_dark_fgWhite_underline { background:#BF8F00; color:#FFFFFF; text-decoration:underline; }
+.accent4_dark_fgYellow_normal { background:#BF8F00; color:#FFFFAA;  }
+.accent4_dark_fgYellow_bold { background:#BF8F00; color:#FFFFAA; font-weight:bold; }
+.accent4_dark_fgYellow_italic { background:#BF8F00; color:#FFFFAA; font-style:italic; }
+.accent4_dark_fgYellow_underline { background:#BF8F00; color:#FFFFAA; text-decoration:underline; }
+.accent4_dark_fgLightBlue_normal { background:#BF8F00; color:#D6E6FF;  }
+.accent4_dark_fgLightBlue_bold { background:#BF8F00; color:#D6E6FF; font-weight:bold; }
+.accent4_dark_fgLightBlue_italic { background:#BF8F00; color:#D6E6FF; font-style:italic; }
+.accent4_dark_fgLightBlue_underline { background:#BF8F00; color:#D6E6FF; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT5 — LIGHT BACKGROUND (#E2EFDA)
+   Text: dark colors
+   ============================================================ */
+
+.accent5_light_fgBlack_normal { background:#E2EFDA; color:#000000;  }
+.accent5_light_fgBlack_bold { background:#E2EFDA; color:#000000; font-weight:bold; }
+.accent5_light_fgBlack_italic { background:#E2EFDA; color:#000000; font-style:italic; }
+.accent5_light_fgBlack_underline { background:#E2EFDA; color:#000000; text-decoration:underline; }
+.accent5_light_fgGray_normal { background:#E2EFDA; color:#3A3A3A;  }
+.accent5_light_fgGray_bold { background:#E2EFDA; color:#3A3A3A; font-weight:bold; }
+.accent5_light_fgGray_italic { background:#E2EFDA; color:#3A3A3A; font-style:italic; }
+.accent5_light_fgGray_underline { background:#E2EFDA; color:#3A3A3A; text-decoration:underline; }
+.accent5_light_fgBrown_normal { background:#E2EFDA; color:#5A381E;  }
+.accent5_light_fgBrown_bold { background:#E2EFDA; color:#5A381E; font-weight:bold; }
+.accent5_light_fgBrown_italic { background:#E2EFDA; color:#5A381E; font-style:italic; }
+.accent5_light_fgBrown_underline { background:#E2EFDA; color:#5A381E; text-decoration:underline; }
+.accent5_light_fgDarkGreen_normal { background:#E2EFDA; color:#0B3B0B;  }
+.accent5_light_fgDarkGreen_bold { background:#E2EFDA; color:#0B3B0B; font-weight:bold; }
+.accent5_light_fgDarkGreen_italic { background:#E2EFDA; color:#0B3B0B; font-style:italic; }
+.accent5_light_fgDarkGreen_underline { background:#E2EFDA; color:#0B3B0B; text-decoration:underline; }
+.accent5_light_fgPurple_normal { background:#E2EFDA; color:#2E1A47;  }
+.accent5_light_fgPurple_bold { background:#E2EFDA; color:#2E1A47; font-weight:bold; }
+.accent5_light_fgPurple_italic { background:#E2EFDA; color:#2E1A47; font-style:italic; }
+.accent5_light_fgPurple_underline { background:#E2EFDA; color:#2E1A47; text-decoration:underline; }
+.accent5_light_fgDarkRed_normal { background:#E2EFDA; color:#7A0000;  }
+.accent5_light_fgDarkRed_bold { background:#E2EFDA; color:#7A0000; font-weight:bold; }
+.accent5_light_fgDarkRed_italic { background:#E2EFDA; color:#7A0000; font-style:italic; }
+.accent5_light_fgDarkRed_underline { background:#E2EFDA; color:#7A0000; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT5 — MEDIUM BACKGROUND (#70AD47)
+   Text: light colors
+   ============================================================ */
+
+.accent5_medium_fgWhite_normal { background:#70AD47; color:#FFFFFF;  }
+.accent5_medium_fgWhite_bold { background:#70AD47; color:#FFFFFF; font-weight:bold; }
+.accent5_medium_fgWhite_italic { background:#70AD47; color:#FFFFFF; font-style:italic; }
+.accent5_medium_fgWhite_underline { background:#70AD47; color:#FFFFFF; text-decoration:underline; }
+.accent5_medium_fgYellow_normal { background:#70AD47; color:#FFFFAA;  }
+.accent5_medium_fgYellow_bold { background:#70AD47; color:#FFFFAA; font-weight:bold; }
+.accent5_medium_fgYellow_italic { background:#70AD47; color:#FFFFAA; font-style:italic; }
+.accent5_medium_fgYellow_underline { background:#70AD47; color:#FFFFAA; text-decoration:underline; }
+.accent5_medium_fgLightBlue_normal { background:#70AD47; color:#D6E6FF;  }
+.accent5_medium_fgLightBlue_bold { background:#70AD47; color:#D6E6FF; font-weight:bold; }
+.accent5_medium_fgLightBlue_italic { background:#70AD47; color:#D6E6FF; font-style:italic; }
+.accent5_medium_fgLightBlue_underline { background:#70AD47; color:#D6E6FF; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT5 — DARK BACKGROUND (#507E32)
+   Text: light colors
+   ============================================================ */
+
+.accent5_dark_fgWhite_normal { background:#507E32; color:#FFFFFF;  }
+.accent5_dark_fgWhite_bold { background:#507E32; color:#FFFFFF; font-weight:bold; }
+.accent5_dark_fgWhite_italic { background:#507E32; color:#FFFFFF; font-style:italic; }
+.accent5_dark_fgWhite_underline { background:#507E32; color:#FFFFFF; text-decoration:underline; }
+.accent5_dark_fgYellow_normal { background:#507E32; color:#FFFFAA;  }
+.accent5_dark_fgYellow_bold { background:#507E32; color:#FFFFAA; font-weight:bold; }
+.accent5_dark_fgYellow_italic { background:#507E32; color:#FFFFAA; font-style:italic; }
+.accent5_dark_fgYellow_underline { background:#507E32; color:#FFFFAA; text-decoration:underline; }
+.accent5_dark_fgLightBlue_normal { background:#507E32; color:#D6E6FF;  }
+.accent5_dark_fgLightBlue_bold { background:#507E32; color:#D6E6FF; font-weight:bold; }
+.accent5_dark_fgLightBlue_italic { background:#507E32; color:#D6E6FF; font-style:italic; }
+.accent5_dark_fgLightBlue_underline { background:#507E32; color:#D6E6FF; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT6 — LIGHT BACKGROUND (#D9E1F2)
+   Text: dark colors
+   ============================================================ */
+
+.accent6_light_fgBlack_normal { background:#D9E1F2; color:#000000;  }
+.accent6_light_fgBlack_bold { background:#D9E1F2; color:#000000; font-weight:bold; }
+.accent6_light_fgBlack_italic { background:#D9E1F2; color:#000000; font-style:italic; }
+.accent6_light_fgBlack_underline { background:#D9E1F2; color:#000000; text-decoration:underline; }
+.accent6_light_fgGray_normal { background:#D9E1F2; color:#3A3A3A;  }
+.accent6_light_fgGray_bold { background:#D9E1F2; color:#3A3A3A; font-weight:bold; }
+.accent6_light_fgGray_italic { background:#D9E1F2; color:#3A3A3A; font-style:italic; }
+.accent6_light_fgGray_underline { background:#D9E1F2; color:#3A3A3A; text-decoration:underline; }
+.accent6_light_fgBrown_normal { background:#D9E1F2; color:#5A381E;  }
+.accent6_light_fgBrown_bold { background:#D9E1F2; color:#5A381E; font-weight:bold; }
+.accent6_light_fgBrown_italic { background:#D9E1F2; color:#5A381E; font-style:italic; }
+.accent6_light_fgBrown_underline { background:#D9E1F2; color:#5A381E; text-decoration:underline; }
+.accent6_light_fgDarkGreen_normal { background:#D9E1F2; color:#0B3B0B;  }
+.accent6_light_fgDarkGreen_bold { background:#D9E1F2; color:#0B3B0B; font-weight:bold; }
+.accent6_light_fgDarkGreen_italic { background:#D9E1F2; color:#0B3B0B; font-style:italic; }
+.accent6_light_fgDarkGreen_underline { background:#D9E1F2; color:#0B3B0B; text-decoration:underline; }
+.accent6_light_fgPurple_normal { background:#D9E1F2; color:#2E1A47;  }
+.accent6_light_fgPurple_bold { background:#D9E1F2; color:#2E1A47; font-weight:bold; }
+.accent6_light_fgPurple_italic { background:#D9E1F2; color:#2E1A47; font-style:italic; }
+.accent6_light_fgPurple_underline { background:#D9E1F2; color:#2E1A47; text-decoration:underline; }
+.accent6_light_fgDarkRed_normal { background:#D9E1F2; color:#7A0000;  }
+.accent6_light_fgDarkRed_bold { background:#D9E1F2; color:#7A0000; font-weight:bold; }
+.accent6_light_fgDarkRed_italic { background:#D9E1F2; color:#7A0000; font-style:italic; }
+.accent6_light_fgDarkRed_underline { background:#D9E1F2; color:#7A0000; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT6 — MEDIUM BACKGROUND (#4472C4)
+   Text: light colors
+   ============================================================ */
+
+.accent6_medium_fgWhite_normal { background:#4472C4; color:#FFFFFF;  }
+.accent6_medium_fgWhite_bold { background:#4472C4; color:#FFFFFF; font-weight:bold; }
+.accent6_medium_fgWhite_italic { background:#4472C4; color:#FFFFFF; font-style:italic; }
+.accent6_medium_fgWhite_underline { background:#4472C4; color:#FFFFFF; text-decoration:underline; }
+.accent6_medium_fgYellow_normal { background:#4472C4; color:#FFFFAA;  }
+.accent6_medium_fgYellow_bold { background:#4472C4; color:#FFFFAA; font-weight:bold; }
+.accent6_medium_fgYellow_italic { background:#4472C4; color:#FFFFAA; font-style:italic; }
+.accent6_medium_fgYellow_underline { background:#4472C4; color:#FFFFAA; text-decoration:underline; }
+.accent6_medium_fgLightBlue_normal { background:#4472C4; color:#D6E6FF;  }
+.accent6_medium_fgLightBlue_bold { background:#4472C4; color:#D6E6FF; font-weight:bold; }
+.accent6_medium_fgLightBlue_italic { background:#4472C4; color:#D6E6FF; font-style:italic; }
+.accent6_medium_fgLightBlue_underline { background:#4472C4; color:#D6E6FF; text-decoration:underline; }
+
+
+/* ============================================================
+   ACCENT6 — DARK BACKGROUND (#2F4F8F)
+   Text: light colors
+   ============================================================ */
+
+.accent6_dark_fgWhite_normal { background:#2F4F8F; color:#FFFFFF;  }
+.accent6_dark_fgWhite_bold { background:#2F4F8F; color:#FFFFFF; font-weight:bold; }
+.accent6_dark_fgWhite_italic { background:#2F4F8F; color:#FFFFFF; font-style:italic; }
+.accent6_dark_fgWhite_underline { background:#2F4F8F; color:#FFFFFF; text-decoration:underline; }
+.accent6_dark_fgYellow_normal { background:#2F4F8F; color:#FFFFAA;  }
+.accent6_dark_fgYellow_bold { background:#2F4F8F; color:#FFFFAA; font-weight:bold; }
+.accent6_dark_fgYellow_italic { background:#2F4F8F; color:#FFFFAA; font-style:italic; }
+.accent6_dark_fgYellow_underline { background:#2F4F8F; color:#FFFFAA; text-decoration:underline; }
+.accent6_dark_fgLightBlue_normal { background:#2F4F8F; color:#D6E6FF;  }
+.accent6_dark_fgLightBlue_bold { background:#2F4F8F; color:#D6E6FF; font-weight:bold; }
+.accent6_dark_fgLightBlue_italic { background:#2F4F8F; color:#D6E6FF; font-style:italic; }
+.accent6_dark_fgLightBlue_underline { background:#2F4F8F; color:#D6E6FF; text-decoration:underline; }
+
+/* =========================
+   CSV friendly error box
+   ========================= */
+.csv-error-box{
+  border:2px solid #b42318;
+  background:#fff3f2;
+  color:#1b1b1b;
+  padding:14px 16px;
+  border-radius:12px;
+  margin:12px auto;
+  max-width:1100px;
+  box-shadow:0 6px 22px rgba(20,22,26,.08);
   direction: rtl;
 }
+.csv-error-title{font-weight:800; font-size:1.15em; margin-bottom:6px;}
+.csv-error-details{font-size:1em; line-height:1.5;}
+.csv-error-details code{display:block; padding:8px 10px; margin-top:6px; background:#fff; border:1px solid rgba(0,0,0,.12); border-radius:10px; overflow:auto; direction:ltr; text-align:left;}
+.csv-error-hint{margin-top:8px; font-size:.95em; color:#5c667a;}
 
-/* ===== אזור כותרת ===== */
-.header-container {
-  text-align: center;
-  margin-bottom: 14px;
+/* Ensure button rows align to RIGHT in RTL reliably */
+.header-buttons, .buttons{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:flex-end; /* right side */
+  align-items:center;
 }
 
-.main-title {
-  color: #2b3a55;
-  font-size: 34px;
-  margin: 0 0 10px 0;
+/* Buttons: larger label font (only buttons), Arial */
+button{
+  font-family: Arial, sans-serif;
+  font-size: 1.35em;
 }
 
-.header-buttons button {
-  margin: 4px;
+/* styles page: bigger fonts */
+body.styles-page{ font-size: 1.35em; }
+
+
+/* ==== v2-final overrides ==== */
+
+/* Align controls to the RIGHT in RTL */
+.header-buttons, .buttons{
+  direction: rtl;
+  justify-content: flex-start !important; /* in RTL this is the right edge */
 }
 
-/* ===== סטטוס ===== */
-.status {
-  margin: 10px 0 18px;
-  padding: 8px 12px;
-  background: #fff7d6;
-  border: 1px solid #e6d28a;
-  border-radius: 10px;
-  color: #2b3a55;
-  font-size: 16px;
-  text-align: center;
-  min-height: 22px;
+/* Only button labels: x2 size + Arial (do NOT affect other text) */
+.header-buttons button, .buttons button{
+  font-family: Arial, sans-serif !important;
+  font-size: calc(clamp(14px, 2.2vw, 20px) * 2) !important;
 }
 
-/* ===== קופסת פסוק (פריים קטן יותר) ===== */
-.pasuk {
-  background: white;
-  padding: 14px 16px;   /* קטן יותר */
-  margin: 12px 0;       /* קטן יותר */
-  border-radius: 14px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.10);
-  transition: 0.25s;
-}
-
-/* ===== highlight בזמן ניגון ===== */
-.pasuk.playing {
-  outline: 4px solid #f2c94c;
-  box-shadow: 0 0 0 6px rgba(242, 201, 76, 0.25);
-  background: #fffdf5;
-}
-
-/* ===== טקסט הפסוק ===== */
-.pasuk-text {
-  font-size: 34px;
-  color: #1f3b57;
-  font-weight: 500;
-  margin: 0;            /* חשוב: מוריד ריווח גדול מעל/מתחת לטקסט */
-}
-
-/* כותרת "פסוק ב)" בלבד — לא מגדילים */
-.pasuk-label {
-  font-size: 24px;
-  color: #2b3a55;
-  font-weight: 700;
-}
-
-/* ===== סוף פסוק / סימונים לימודיים ===== */
-.end-verse {
-  color: #b02323;       /* סוף פסוק באדום כהה */
+/* Sequential repeat selector next to the button */
+.seq-repeat-select{
+  font-family: Arial, sans-serif;
   font-weight: 800;
-}
-
-/* אתנחתא (תשתמש ידנית באמצע פסוק) */
-.etnahta {
-  color: #7b2cbf;       /* סגול */
-  font-weight: 800;
-  text-decoration: underline;
-}
-
-/* ===== כפתורים ===== */
-.buttons {
-  margin-bottom: 10px;
-}
-
-button {
-  padding: 8px 14px;
-  margin-left: 6px;
-  border-radius: 8px;
-  border: none;
-  background: #3a6ea5;
-  color: white;
+  font-size: calc(clamp(14px, 2.2vw, 20px) * 2);
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(31,75,153,.22);
+  background: rgba(31,75,153,.10);
+  color: #14161a;
+  min-height: 44px;
   cursor: pointer;
-  font-size: 15px;
-  transition: 0.2s;
 }
 
-button:hover {
-  background: #274c77;
+/* Now-playing verse: also bold the text */
+.pasuk.playing .pasuk-text{
+  font-weight: 900 !important;
 }
 
-button.stop {
-  background: #8a2e2e;
+
+/* ===== Overrides v13 2026-02-25 17:03:39 ===== */
+.header-buttons, .buttons {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end; /* align to right */
+  direction: ltr; /* keep flex-end as right */
 }
 
-button.stop:hover {
-  background: #6e2323;
+.header-buttons button, .buttons button {
+  direction: rtl; /* Hebrew inside */
+  font-family: Arial, sans-serif;
+  font-size: 2em; /* x2 */
 }
 
-/* ===== התאמה למסך נייד ===== */
-@media (max-width: 768px) {
+.seq-repeat-select {
+  font-family: Arial, sans-serif;
+  font-size: 2em;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
 
-  body {
-    padding: 14px;
-  }
+.pasuk.playing {
+  background: #fff6cc; /* light yellow */
+  border-color: #f4d46a;
+}
 
-  .pasuk-text {
-    font-size: 28px;   /* מעט קטן יותר למובייל */
-  }
+.pasuk.playing .pasuk-text {
+  font-weight: 800;
+}
 
-  .buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
 
-  button {
-    flex: 1 1 45%;
-    font-size: 14px;
-    padding: 8px;
-  }
+/* ===== Final overrides v15 2026-02-25 19:27:44 ===== */
+.header-buttons, .buttons {
+  direction: rtl !important;              /* keep Hebrew ordering */
+  justify-content: flex-start !important; /* in RTL, flex-start is RIGHT */
+  align-items: center !important;
+}
 
-  .header-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    justify-content: center;
-  }
+.header-buttons {
+  margin: 10px 0 12px 0 !important;
+}
+
+.buttons {
+  margin-bottom: 10px !important;
+}
+
+.header-buttons button, .buttons button {
+  font-family: Arial, sans-serif !important;
+  font-size: calc(clamp(14px, 2.2vw, 20px) * 2) !important;
+  line-height: 1.1 !important;
+}
+
+.seq-repeat-select, #seqRepeatSelect {
+  font-family: Arial, sans-serif !important;
+  font-size: calc(clamp(14px, 2.2vw, 20px) * 2) !important;
+  padding: 10px 12px !important;
+  min-height: 44px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(31,75,153,.22) !important;
+}
+
+.pasuk.playing {
+  background: #fff7d6 !important;
+  border: 2px solid #ffe08a !important;
+  box-shadow: 0 10px 26px rgba(20,22,26,.10) !important;
+}
+
+.pasuk.playing .pasuk-text {
+  font-weight: 900 !important;
 }

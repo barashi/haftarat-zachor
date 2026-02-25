@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://barashi.github.io/haftarat-zachor/sitemap.xml
