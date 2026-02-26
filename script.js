@@ -5,7 +5,57 @@
 // Reuse a single <audio> instance for better performance and fewer glitches.
 let currentAudio = null;
 let currentBox = null;
+// Keep highlight stable even if CSS or re-renders interfere
+let highlightKeepAliveTimer = null;
 let currentPlayingBoxId = null;
+
+function startHighlightKeepAlive() {
+  stopHighlightKeepAlive();
+  highlightKeepAliveTimer = setInterval(() => {
+    if (!currentPlayingBoxId) return;
+    const box = document.getElementById(currentPlayingBoxId);
+    if (!box) return;
+    if (!box.classList.contains("playing")) box.classList.add("playing");
+    const t = box.querySelector(".pasuk-text");
+    if (t) t.classList.add("playing-text");
+    // Inline fallback (wins over any CSS overrides)
+    box.style.backgroundColor = "rgba(255, 243, 205, 0.9)";
+    box.style.borderColor = "#f0d27a";
+    box.style.boxShadow = "0 2px 8px rgba(0,0,0,0.08)";
+    if (t) t.style.fontWeight = "900";
+  }, 200);
+}
+
+function stopHighlightKeepAlive() {
+  if (highlightKeepAliveTimer) {
+    clearInterval(highlightKeepAliveTimer);
+    highlightKeepAliveTimer = null;
+  }
+}
+
+
+// Clear "playing now" styles from ALL verses (requested behavior: always keep a single active highlight)
+function clearAllPlayingStyles() {
+  stopHighlightKeepAlive();
+  currentPlayingBoxId = "";
+  currentBox = null;
+
+  // Remove class-based highlight
+  document.querySelectorAll(".pasuk.playing").forEach((el) => {
+    el.classList.remove("playing");
+    // Remove inline fallback styles
+    el.style.backgroundColor = "";
+    el.style.borderColor = "";
+    el.style.boxShadow = "";
+  });
+
+  // Remove text highlight + bold
+  document.querySelectorAll(".pasuk-text.playing-text").forEach((t) => {
+    t.classList.remove("playing-text");
+    t.style.fontWeight = "";
+  });
+}
+
 let currentPlayingLabel = "";
 let currentPlayingFile = "";
 
@@ -23,8 +73,8 @@ let sequentialBtnEl = null;
 const AUDIO_DIR = "audio/";
 const DATA_DIR = "data/";
 
-const BUILD_VERSION = "v15";
-const BUILD_TIMESTAMP = "2026-02-25 19:27:44";
+const BUILD_VERSION = "v22";
+const BUILD_TIMESTAMP = "2026-02-25 22:37:11";
 const BUILD_LABEL = `${BUILD_VERSION} ${BUILD_TIMESTAMP}`;
 
 /* ---------- UI helpers ---------- */
@@ -40,11 +90,11 @@ function setStatus(msg) {
 
 
 function clearHighlight() {
-  if (currentBox) {
-    currentBox.classList.remove("playing");
-    currentBox = null;
-  }
+  // v22: highlight clearing disabled by request.
+  // We intentionally keep the 'playing' style after playback ends.
+  return;
 }
+
 
 function setHighlightById(boxId) {
   if (!boxId) { 
@@ -56,12 +106,25 @@ function setHighlightById(boxId) {
     clearHighlight();
     return;
   }
+  // Always clear any previous 'playing now' styles from all verses
+  clearAllPlayingStyles();
   // Switch highlight with minimal "blink"
   if (currentBox && currentBox !== box) {
     currentBox.classList.remove("playing");
   }
   currentBox = box;
   currentBox.classList.add("playing");
+  currentPlayingBoxId = boxId;
+  const t = currentBox.querySelector(".pasuk-text");
+  if (t) {
+    t.classList.add("playing-text");
+    t.style.fontWeight = "900";
+  }
+  // Inline fallback styles (survive CSS overrides)
+  currentBox.style.backgroundColor = "rgba(255, 243, 205, 0.9)";
+  currentBox.style.borderColor = "#f0d27a";
+  currentBox.style.boxShadow = "0 2px 8px rgba(0,0,0,0.08)";
+  startHighlightKeepAlive();
 
   // Scroll to current verse (helps on mobile)
   try {
@@ -70,10 +133,22 @@ function setHighlightById(boxId) {
 }
 
 function stopAudio() {
+  // IMPORTANT: because we reuse a single <audio> element, old event handlers
+  // (especially onended) can fire during pause/reset and immediately clear the
+  // highlight for the *new* verse. To prevent the "blink", detach handlers first.
   if (currentAudio) {
     try {
+      currentAudio.onended = null;
+      currentAudio.onerror = null;
+      currentAudio.onplaying = null;
+      currentAudio.onloadedmetadata = null;
+    } catch (_) {}
+    try {
       currentAudio.pause();
+      // Reset without triggering stale handlers
       currentAudio.currentTime = 0;
+      // Optional: remove src to avoid edge "ended" events on some browsers
+      // currentAudio.src = "";
     } catch (_) {}
   }
   clearHighlight();
@@ -807,7 +882,7 @@ async function renderMain() {
     container.appendChild(box);
   }
 
-  setStatus("✅ נטען בהצלחה מהדאטה־בייס (CSV). · v13 2026-02-25 17:03:39");
+  setStatus("✅ נטען בהצלחה מהדאטה־בייס (CSV).");
 }
 
 /* ---------- Styles page rendering (CSS -> list) ---------- */

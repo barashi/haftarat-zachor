@@ -725,3 +725,20 @@ body.styles-page{ font-size: 1.35em; }
 .pasuk.playing .pasuk-text {
   font-weight: 900 !important;
 }
+
+
+/* Playing (stable) */
+.pasuk.playing { background: rgba(255, 243, 205, 0.9) !important; border-color: #f0d27a !important; }
+.pasuk.playing .pasuk-text, .pasuk .pasuk-text.playing-text { font-weight: 900 !important; }
+
+
+/* ===== FORCE "currently playing" styling (wins over late overrides) ===== */
+.pasuk.playing{
+  background: rgba(255,243,205,0.9) !important;
+  border-color: #f0d27a !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+.pasuk.playing .pasuk-text{
+  font-weight: 900 !important;
+}
+
